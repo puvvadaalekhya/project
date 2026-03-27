@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card shadow p-4">
+  <h4 class="mb-3">Automatic System Report</h4>
+
+  <div class="alert alert-danger">
+    Hardest Course: <strong>{{ hardest.course }}</strong>
+  </div>
+
+  <div class="alert alert-success">
+    Easiest Course: <strong>{{ easiest.course }}</strong>
+  </div>
+
+  <p class="mt-3">
+    This system dynamically evaluates course difficulty using statistical
+    dispersion metrics including mean, standard deviation, failure rate,
+    and a weighted difficulty index.
+  </p>
+</div>
+
+{% endblock %}

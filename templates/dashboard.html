@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row mb-4">
+  <div class="col-md-4">
+    <form method="POST" enctype="multipart/form-data" class="card shadow p-3">
+      <label class="form-label">Upload CSV / Excel File</label>
+      <input type="file" name="file" class="form-control mb-2">
+      <button class="btn btn-success w-100">Analyze</button>
+    </form>
+  </div>
+
+  <div class="col-md-8 text-end">
+    <a href="/download_report" class="btn btn-warning me-2">Download PDF</a>
+    <a href="/system_report" class="btn btn-info">View Report</a>
+  </div>
+</div>
+
+<div class="card shadow p-4 mb-4">
+  <h5 class="mb-3">Course Difficulty Table</h5>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Course</th>
+          <th>Mean</th>
+          <th>Std Dev</th>
+          <th>Failure %</th>
+          <th>Difficulty Index</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in results %}
+        <tr>
+          <td>{{ r.course }}</td>
+          <td>{{ r.mean }}</td>
+          <td>{{ r.std }}</td>
+          <td>{{ r.failure }}</td>
+          <td><strong>{{ r.difficulty }}</strong></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card shadow p-4">
+  <h5 class="mb-3">Difficulty Comparison Chart</h5>
+  <canvas id="chart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById("chart"), {
+  type: "bar",
+  data: {
+    labels: [{% for r in results %}"{{ r.course }}",{% endfor %}],
+    datasets: [{
+      label: "Difficulty Index",
+      data: [{% for r in results %}{{ r.difficulty }},{% endfor %}],
+      backgroundColor: "#0d6efd"
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false }
+    }
+  }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow p-4">
+      <h3 class="text-center mb-4">Admin Login</h3>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert alert-danger">
+            {% for message in messages %}
+              <div>{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input name="username" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input name="password" type="password" class="form-control" required>
+        </div>
+
+        <button class="btn btn-primary w-100">Login</button>
+      </form>
+
+      <div class="text-center mt-3">
+        <a href="/register">Create new account</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
